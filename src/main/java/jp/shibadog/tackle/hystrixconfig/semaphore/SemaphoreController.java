@@ -1,4 +1,4 @@
-package jp.shibadog.tackle.hystrixconfig.threadpool;
+package jp.shibadog.tackle.hystrixconfig.semaphore;
 
 import java.util.stream.IntStream;
 
@@ -11,11 +11,11 @@ import jp.shibadog.tackle.hystrixconfig.AsyncSharedService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/test/threadpool")
+@RequestMapping("/test/semaphore")
 @Slf4j
-public class ThreadPoolController {
+public class SemaphoreController {
     @Autowired
-    private ThreadPoolHystrix service;
+    private SemaphoreHystrix service;
 
     @Autowired
     private AsyncSharedService asyncService;
@@ -49,34 +49,6 @@ public class ThreadPoolController {
                 return i;
             }).count();
         log.info("動かし終わったお: {}本", count);
-        return "OK";
-    }
-    
-    @RequestMapping("/queue/{cnt}")
-    public String threadpoolQueue(@PathVariable int cnt) {
-        log.info("これからうごかすお！");
-        long count = IntStream.range(1, cnt + 1)
-            .map(i -> {
-                asyncService.async(service::executeQueueing, i);
-                return i;
-            }).count();
-        log.info("動かし終わったお: {}本", count);
-        return "OK";
-    }
-
-    @RequestMapping("/queue/one")
-    public String threadpoolQueue_one() {
-        log.info("これからうごかすお！");
-        service.executeQueueing(1);
-        log.info("動かし終わったお");
-        return "OK";
-    }
-
-    @RequestMapping("/maximum/one")
-    public String threadpoolMaximum_one() {
-        log.info("これからうごかすお！");
-        service.executeMaximum(1);
-        log.info("動かし終わったお");
         return "OK";
     }
 

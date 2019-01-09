@@ -1,4 +1,4 @@
-package jp.shibadog.tackle.hystrixconfig.threadpool;
+package jp.shibadog.tackle.hystrixconfig;
 
 import java.util.function.Consumer;
 
@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class AsyncService {
+public class AsyncSharedService {
 
     @Async
     public void async(Consumer<Integer> fnc, int index) {
