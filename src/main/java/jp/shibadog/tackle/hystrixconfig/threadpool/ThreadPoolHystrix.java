@@ -67,6 +67,31 @@ public class ThreadPoolHystrix {
         return res;
     }
 
+    @HystrixCommand(
+        commandKey = "threadPool-maximum",
+        fallbackMethod = "fallback",
+        threadPoolProperties = {
+            @HystrixProperty(name = "coreSize", value = "3"),
+            @HystrixProperty(name = "maximumSize", value = "5"),
+            @HystrixProperty(name = "maxQueueSize", value = "10"),
+            @HystrixProperty(name = "allowMaximumSizeToDivergeFromCoreSize", value = "true")
+        },
+        commandProperties = {
+            @HystrixProperty(name = "execution.timeout.enabled", value = "false")
+        }
+    )
+    public String executeMaximum(int index) {
+        log.info("{}本目->まかせとけぇぇぇぇぇぇ！", index);
+        int port = serverProperties.getPort();
+        RestTemplate restTemplate = restTemplateBuilder.build();
+
+        String res = restTemplate.getForObject("http://localhost:" + port + "/timeout/10", String.class);
+
+        log.info("{}本目->うまくうごいたお", index);
+
+        return res;
+    }
+
     public String fallback(int index, Throwable t) {
         log.info("{}本目->ふぉーるばっくしたお", index);
         return "fallback";

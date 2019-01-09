@@ -19,6 +19,14 @@ public class ThreadPoolController {
     @Autowired
     private AsyncService asyncService;
     
+    @RequestMapping({"/one"})
+    public String threadpool_one() {
+        log.info("これからうごかすお！");
+        service.execute(1);
+        log.info("動かし終わったお");
+        return "OK";
+    }
+
     @RequestMapping({"/", ""})
     public String threadpool() {
         log.info("これからうごかすお！");
@@ -52,6 +60,22 @@ public class ThreadPoolController {
                 return i;
             }).count();
         log.info("動かし終わったお: {}本", count);
+        return "OK";
+    }
+
+    @RequestMapping("/queue/one")
+    public String threadpoolQueue_one() {
+        log.info("これからうごかすお！");
+        service.executeQueueing(1);
+        log.info("動かし終わったお");
+        return "OK";
+    }
+
+    @RequestMapping("/maximum/one")
+    public String threadpoolMaximum_one() {
+        log.info("これからうごかすお！");
+        service.executeMaximum(1);
+        log.info("動かし終わったお");
         return "OK";
     }
 
