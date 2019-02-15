@@ -25,7 +25,8 @@ public class SemaphoreHystrix {
         fallbackMethod = "fallback",
         commandProperties = {
             @HystrixProperty(name = "execution.isolation.strategy", value = "SEMAPHORE"),
-            @HystrixProperty(name = "execution.isolation.semaphore.maxConcurrentRequests", value = "5")
+            @HystrixProperty(name = "execution.isolation.semaphore.maxConcurrentRequests", value = "5"),
+            @HystrixProperty(name = "execution.timeout.enabled", value = "false")
         }
     )
     public String execute(int index) {
