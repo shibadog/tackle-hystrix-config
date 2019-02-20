@@ -19,9 +19,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableAsync
 @EnableHystrixDashboard
 public class Application extends SpringBootServletInitializer {
-    static {
-        HystrixPlugins.getInstance().registerMetricsPublisher(HystrixServoMetricsPublisher.getInstance());
-    }
     
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
